@@ -1,0 +1,22 @@
+.container {
+    float: left;
+    position: relative;
+    height: 40px;
+    width: 100%;
+    padding: 0 15px;
+    box-sizing: border-box;
+    background-color: #1a8dbc;
+    color: white;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.logo {
+    width: 25px;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border: 0;
+    border-radius: 5px;
+    outline: none;
+}
