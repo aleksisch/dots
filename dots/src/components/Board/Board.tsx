@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import {Dot, IDot, State} from "./Dot";
+import styles from './Board.module.css';
+import {useParams} from 'react-router-dom';
 
 interface IBoardState {
     dotBoard: IDot[][],
@@ -118,13 +120,12 @@ function paint(dot: IDot, prev: IBoardState, cb: (dor:IDot)=>void): IBoardState 
     copy.dotBoard[dot.x][dot.y].state = state;
 
     const newLoop = find_loops(dot, copy.dotBoard, copy.player);
-    alert(newLoop)
     let prev_dot = newLoop[newLoop.length - 1];
     for (let edge of newLoop) {
+        alert("found")
         let dot = copy.dotBoard[prev_dot[0]][prev_dot[1]];
         dot.next_x = edge[0];
         dot.next_y = edge[1];
-        alert([dot.state, copy.player]);
         dot.state = updateState(dot.state, copy.player)!;
         prev_dot = edge;
     }
@@ -138,8 +139,9 @@ function paint(dot: IDot, prev: IBoardState, cb: (dor:IDot)=>void): IBoardState 
 }
 
 const Board = () => {
-    const height = 5;
-    const width = 5;
+    const height = 30;
+    const width = 15;
+    const {player1, player2} = useParams();
     const genBoard = () => {
         let board: IDot[][] = [];
         for (let i = 0; i < height; i++) {
@@ -178,13 +180,19 @@ const Board = () => {
         return render;
     }
 
+    const renderScore = (name: string, score: number) => {
+        return <div className={styles.score}> Player {name} score = {score} </div>
+    }
+
     return (
         <div style={{alignItems: 'center', justifyContent: 'center'}}>
-            {
-                renderBoard()
-            }
-            <div>{board.score1}</div>
-            <div>{board.score2}</div>
+            <div>{renderScore(player1!, board.score1)}</div>
+            <div>{renderScore(player2!, board.score2)}</div>
+            <div className={styles.score}> Ходит игрок {board.player % 2 == 0 ? player1! : player2!}</div>
+            <a className={styles.score} href="/">
+                <button>Сдаться</button>
+            </a>
+            <div className={styles.board}>{renderBoard()}</div>
         </div>
     );
 };

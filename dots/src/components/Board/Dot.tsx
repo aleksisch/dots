@@ -35,9 +35,9 @@ const Dot: React.FC<DotProps> = (props) => {
         } else if (state === State.Process2) {
             return "green";
         } else if (state === State.Used1) {
-            return "black";
+            return "blue";
         } else if (state === State.Used2) {
-            return "yellow";
+            return "green";
         } else if (state === State.Dead1) {
             return "purple";
         } else if (state === State.Dead2) {
