@@ -11,7 +11,7 @@ const Navbar = () => {
             aria-label="main navigation"
         >
             <img className={styles.logo} src={"threedots.png"} alt={""}/>
-            <h3>Миха лох</h3>
+            <h3>Точки</h3>
             <div>
                 <div className="navbar-brand">
                     <a

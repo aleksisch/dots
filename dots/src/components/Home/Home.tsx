@@ -13,7 +13,6 @@ function Home() {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        alert(inputs);
         if (inputs.player1 !== "" && inputs.player2 !== "") {
             setInputs(values=>({...values, ["submit"]: true}))
         } else {

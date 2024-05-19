@@ -26,7 +26,7 @@ function dfs(used: Map<number, Set<number>>, x: number, y: number, parentx: numb
             dot.state !== ((player % 2 === 0) ? State.Process2 : State.Process1)) {
             return [];
         } else if (used.has(x1) && used.get(x1)?.has(y1)) {
-            if (x1 == initx && y1 == inity) {
+            if (x1 === initx && y1 === inity) {
                 return [[x1, y1]]
             } else {
                 return []
@@ -69,7 +69,7 @@ function countScore(points: number[][], board: IDot[][], player: number) {
     for (let [x, point] of orderedPoints) {
         for (let i = 0; i < point.length - 1; i++) {
             for (let iter = point[i] + 1; iter < point[i + 1]; iter++) {
-                if (board[x][iter].state == lookState) {
+                if (board[x][iter].state === lookState) {
                     diff += 1;
                     board[x][iter].state = nextState;
                 }
@@ -122,15 +122,14 @@ function paint(dot: IDot, prev: IBoardState, cb: (dor:IDot)=>void): IBoardState 
     const newLoop = find_loops(dot, copy.dotBoard, copy.player);
     let prev_dot = newLoop[newLoop.length - 1];
     for (let edge of newLoop) {
-        alert("found")
         let dot = copy.dotBoard[prev_dot[0]][prev_dot[1]];
-        dot.next_x = edge[0];
-        dot.next_y = edge[1];
+        dot.next_x.push(edge[0]);
+        dot.next_y.push(edge[1]);
         dot.state = updateState(dot.state, copy.player)!;
         prev_dot = edge;
     }
     let diff = countScore(newLoop, copy.dotBoard, copy.player);
-    if (copy.player % 2 == 0) {
+    if (copy.player % 2 === 0) {
         copy.score2 += diff
     } else {
         copy.score1 += diff;
@@ -147,7 +146,7 @@ const Board = () => {
         for (let i = 0; i < height; i++) {
             let line: IDot[] = []
             for (let j = 0; j < width; j++) {
-                line.push({x:i, y:j, state:State.Clear, next_x:undefined, next_y:undefined})
+                line.push({x:i, y:j, state:State.Clear, next_x:[], next_y:[]})
             }
             board.push(line)
         }
@@ -188,7 +187,7 @@ const Board = () => {
         <div style={{alignItems: 'center', justifyContent: 'center'}}>
             <div>{renderScore(player1!, board.score1)}</div>
             <div>{renderScore(player2!, board.score2)}</div>
-            <div className={styles.score}> Ходит игрок {board.player % 2 == 0 ? player1! : player2!}</div>
+            <div className={styles.score}> Ходит игрок {board.player % 2 === 0 ? player1! : player2!}</div>
             <a className={styles.score} href="/">
                 <button>Сдаться</button>
             </a>

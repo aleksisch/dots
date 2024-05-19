@@ -4,4 +4,6 @@
     height: 10px;
     border-radius: 50%;
     background-color: dimgrey;
+    align-items: center;
+    justify-content: center;
 }
